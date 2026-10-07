@@ -129,6 +129,7 @@ export function SchedulesView() {
   };
 
   const handleRevoke = async (s: Schedule) => {
+    if (!confirm(`Revoke approval for schedule "${s.name}"?`)) return;
     try {
       await api.revokeSchedule(s.name);
       await refresh();

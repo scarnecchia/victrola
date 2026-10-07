@@ -42,6 +42,7 @@ export function ToolsView() {
 
   const handleRevoke = async (e: React.MouseEvent, name: string) => {
     e.stopPropagation();
+    if (!confirm(`Revoke approval for tool "${name}"?`)) return;
     try {
       await api.revokeTool(name);
       await refresh();

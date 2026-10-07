@@ -134,6 +134,7 @@ export function MCPServerDetail() {
 
   const handleRevokeTool = async (toolName: string) => {
     if (!name) return;
+    if (!confirm(`Revoke approval for MCP tool "${toolName}"?`)) return;
     try {
       await api.revokeMCPTool(name, toolName);
       await refresh();

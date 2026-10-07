@@ -128,7 +128,7 @@ export function ToolDetail() {
         ) : (
           <Badge variant="secondary" className="bg-yellow-600 text-white">pending</Badge>
         )}
-        <div className="ml-auto flex gap-2">
+        <div className="ml-auto flex flex-wrap gap-2">
           {!tool.approved && (
             <Button size="sm" onClick={handleApprove}>
               <Check className="mr-1 h-4 w-4" /> Approve
