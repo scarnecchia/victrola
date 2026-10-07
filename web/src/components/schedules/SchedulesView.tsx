@@ -129,6 +129,7 @@ export function SchedulesView() {
   };
 
   const handleRevoke = async (s: Schedule) => {
+    if (!confirm(`Revoke approval for schedule "${s.name}"?`)) return;
     try {
       await api.revokeSchedule(s.name);
       await refresh();
@@ -224,7 +225,7 @@ export function SchedulesView() {
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-medium">{s.name}</span>
+                      <span className="min-w-0 truncate text-sm font-medium">{s.name}</span>
                       {s.enabled ? (
                         <Badge className="bg-green-600 text-white">enabled</Badge>
                       ) : (
@@ -259,7 +260,7 @@ export function SchedulesView() {
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+                  <div className="flex items-center gap-1 hover-reveal shrink-0">
                     {s.condition_code && (
                       <>
                         <Button

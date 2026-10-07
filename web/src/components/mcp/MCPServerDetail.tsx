@@ -134,6 +134,7 @@ export function MCPServerDetail() {
 
   const handleRevokeTool = async (toolName: string) => {
     if (!name) return;
+    if (!confirm(`Revoke approval for MCP tool "${toolName}"?`)) return;
     try {
       await api.revokeMCPTool(name, toolName);
       await refresh();
@@ -378,7 +379,7 @@ export function MCPServerDetail() {
                       </div>
                       <div className="text-xs text-muted-foreground break-words mt-0.5">{tool.description}</div>
                     </div>
-                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 shrink-0">
+                    <div className="flex items-center gap-1 hover-reveal shrink-0">
                       {!tool.approved && (
                         <Button
                           variant="ghost"

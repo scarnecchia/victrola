@@ -74,14 +74,14 @@ export function SecretsView() {
                   key={s.name}
                   className="group flex items-center justify-between rounded-md px-3 py-2.5 hover:bg-accent"
                 >
-                  <div className="flex items-center gap-3">
-                    <code className="text-sm font-medium">{s.name}</code>
-                    <span className="text-sm text-muted-foreground">{s.masked_value}</span>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <code className="truncate text-sm font-medium">{s.name}</code>
+                    <span className="truncate text-sm text-muted-foreground">{s.masked_value}</span>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 opacity-0 group-hover:opacity-100"
+                    className="h-7 w-7 hover-reveal shrink-0"
                     onClick={() => handleDelete(s.name)}
                   >
                     <Trash2 className="h-3.5 w-3.5 text-red-500" />

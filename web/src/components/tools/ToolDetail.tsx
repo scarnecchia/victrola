@@ -77,7 +77,7 @@ export function ToolDetail() {
   };
 
   const handleRevoke = async () => {
-    if (!name) return;
+    if (!name || !confirm(`Revoke approval for tool "${name}"?`)) return;
     try {
       await api.revokeTool(name);
       await refresh();
@@ -118,17 +118,17 @@ export function ToolDetail() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center gap-3 border-b border-border px-6 py-3">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-3 md:px-6">
         <Button variant="ghost" size="icon" onClick={() => navigate("/tools")}>
           <ArrowLeft className="h-4 w-4" />
         </Button>
-        <h2 className="text-lg font-semibold">{tool.name}</h2>
+        <h2 className="min-w-0 break-words text-lg font-semibold">{tool.name}</h2>
         {tool.approved ? (
           <Badge className="bg-green-600 text-white">approved</Badge>
         ) : (
           <Badge variant="secondary" className="bg-yellow-600 text-white">pending</Badge>
         )}
-        <div className="ml-auto flex gap-2">
+        <div className="ml-auto flex flex-wrap gap-2">
           {!tool.approved && (
             <Button size="sm" onClick={handleApprove}>
               <Check className="mr-1 h-4 w-4" /> Approve

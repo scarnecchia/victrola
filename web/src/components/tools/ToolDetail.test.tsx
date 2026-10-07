@@ -107,12 +107,24 @@ describe("ToolDetail", () => {
     await waitFor(() => expect(api.approveTool).toHaveBeenCalledTimes(2));
   });
 
-  it("revokes an approved tool", async () => {
+  it("revokes an approved tool after confirmation", async () => {
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
     api.getTool.mockResolvedValue({ ...mockToolDetail, approved: true });
     renderToolDetail();
     await waitFor(() => expect(screen.getByText("Revoke")).toBeInTheDocument());
     fireEvent.click(screen.getByText("Revoke"));
+    expect(confirmSpy).toHaveBeenCalledWith('Revoke approval for tool "weather"?');
     await waitFor(() => expect(api.revokeTool).toHaveBeenCalledWith("weather"));
+  });
+
+  it("does not revoke when confirmation is dismissed", async () => {
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
+    api.getTool.mockResolvedValue({ ...mockToolDetail, approved: true });
+    renderToolDetail();
+    await waitFor(() => expect(screen.getByText("Revoke")).toBeInTheDocument());
+    fireEvent.click(screen.getByText("Revoke"));
+    expect(confirmSpy).toHaveBeenCalledWith('Revoke approval for tool "weather"?');
+    expect(api.revokeTool).not.toHaveBeenCalled();
   });
 
   it("deletes a tool after confirmation", async () => {

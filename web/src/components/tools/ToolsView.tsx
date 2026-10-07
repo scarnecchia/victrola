@@ -42,6 +42,7 @@ export function ToolsView() {
 
   const handleRevoke = async (e: React.MouseEvent, name: string) => {
     e.stopPropagation();
+    if (!confirm(`Revoke approval for tool "${name}"?`)) return;
     try {
       await api.revokeTool(name);
       await refresh();
@@ -83,8 +84,8 @@ export function ToolsView() {
                   className="group flex cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium">{t.name}</span>
+                    <div className="flex min-w-0 items-center gap-2">
+                      <span className="truncate text-sm font-medium">{t.name}</span>
                       {t.approved ? (
                         <Badge className="bg-green-600 text-white">approved</Badge>
                       ) : (
@@ -94,7 +95,7 @@ export function ToolsView() {
                     </div>
                     <div className="truncate text-xs text-muted-foreground">{t.description}</div>
                   </div>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+                  <div className="flex items-center gap-1 hover-reveal shrink-0">
                     {!t.approved && (
                       <Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => handleApprove(e, t.name)}>
                         <Check className="h-3.5 w-3.5 text-green-500" />

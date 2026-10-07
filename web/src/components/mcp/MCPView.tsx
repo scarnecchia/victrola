@@ -118,8 +118,8 @@ export function MCPView() {
                   className="group flex cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium">{s.name}</span>
+                    <div className="flex min-w-0 items-center gap-2">
+                      <span className="truncate text-sm font-medium">{s.name}</span>
                       <Badge variant="outline">{s.transport}</Badge>
                       {s.connected ? (
                         <Badge className="bg-green-600 text-white">connected</Badge>
@@ -131,7 +131,7 @@ export function MCPView() {
                       {s.tools_approved}/{s.tools_total} tools approved
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+                  <div className="flex items-center gap-1 hover-reveal shrink-0">
                     <Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => handleDelete(e, s.name)}>
                       <Trash2 className="h-3.5 w-3.5 text-red-500" />
                     </Button>

@@ -77,4 +77,32 @@ describe("SessionList", () => {
     renderSessionList();
     await waitFor(() => expect(screen.getByText("(untitled)")).toBeInTheDocument());
   });
+
+  function findDeleteButton(): HTMLElement | undefined {
+    return screen
+      .getAllByRole("button")
+      .find((btn) => btn.querySelector("svg")?.getAttribute("class")?.includes("trash"));
+  }
+
+  it("deletes a session after confirmation", async () => {
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
+    renderSessionList();
+    await waitFor(() => expect(screen.getByText("Session One")).toBeInTheDocument());
+    const deleteBtn = findDeleteButton();
+    expect(deleteBtn).toBeDefined();
+    fireEvent.click(deleteBtn!);
+    expect(confirmSpy).toHaveBeenCalledWith('Delete session "Session One"?');
+    await waitFor(() => expect(api.deleteSession).toHaveBeenCalledWith("abc123"));
+  });
+
+  it("does not delete when confirmation is dismissed", async () => {
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
+    renderSessionList();
+    await waitFor(() => expect(screen.getByText("Session One")).toBeInTheDocument());
+    const deleteBtn = findDeleteButton();
+    expect(deleteBtn).toBeDefined();
+    fireEvent.click(deleteBtn!);
+    expect(confirmSpy).toHaveBeenCalledWith('Delete session "Session One"?');
+    expect(api.deleteSession).not.toHaveBeenCalled();
+  });
 });
