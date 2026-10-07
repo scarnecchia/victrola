@@ -77,7 +77,7 @@ export function ToolDetail() {
   };
 
   const handleRevoke = async () => {
-    if (!name) return;
+    if (!name || !confirm(`Revoke approval for tool "${name}"?`)) return;
     try {
       await api.revokeTool(name);
       await refresh();

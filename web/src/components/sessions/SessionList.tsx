@@ -37,12 +37,12 @@ export function SessionList() {
     }
   };
 
-  const handleDelete = async (e: React.MouseEvent, id: string) => {
+  const handleDelete = async (e: React.MouseEvent, session: Session) => {
     e.stopPropagation();
-    if (!confirm("Delete this session?")) return;
+    if (!confirm(`Delete session "${session.title || session.rkey}"?`)) return;
     try {
-      await api.deleteSession(id);
-      setSessions((prev) => prev.filter((s) => s.rkey !== id));
+      await api.deleteSession(session.rkey);
+      setSessions((prev) => prev.filter((s) => s.rkey !== session.rkey));
     } catch (e) {
       console.error("Failed to delete:", e);
     }
@@ -101,7 +101,7 @@ export function SessionList() {
                     variant="ghost"
                     size="icon"
                     className="h-7 w-7 hover-reveal shrink-0"
-                    onClick={(e) => handleDelete(e, s.rkey)}
+                    onClick={(e) => handleDelete(e, s)}
                   >
                     <Trash2 className="h-3.5 w-3.5 text-red-500" />
                   </Button>
