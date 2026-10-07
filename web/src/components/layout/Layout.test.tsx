@@ -24,10 +24,14 @@ describe("Layout", () => {
     expect(navs[0]).toHaveAccessibleName("Primary");
     expect(navs[1]).toHaveAccessibleName("Sections");
     // Desktop sidebar is hidden below md; mobile top bar is hidden at md and up.
-    const sidebar = navs[0].closest("aside");
-    expect(sidebar?.className).toContain("hidden");
-    expect(sidebar?.className).toContain("md:flex");
-    expect(navs[1].className).toContain("md:hidden");
+    // Compare whole class tokens so e.g. "hidden" cannot match "md:hidden".
+    const sidebarClasses = (navs[0].closest("aside")?.className ?? "").split(/\s+/);
+    expect(sidebarClasses).toContain("hidden");
+    expect(sidebarClasses).toContain("md:flex");
+    expect(sidebarClasses).not.toContain("md:hidden");
+    const mobileNavClasses = navs[1].className.split(/\s+/);
+    expect(mobileNavClasses).toContain("md:hidden");
+    expect(mobileNavClasses).not.toContain("hidden");
   });
 
   it("renders all 8 nav items in both desktop and mobile navs", () => {
