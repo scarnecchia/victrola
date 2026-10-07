@@ -91,7 +91,7 @@ describe("SessionList", () => {
     const deleteBtn = findDeleteButton();
     expect(deleteBtn).toBeDefined();
     fireEvent.click(deleteBtn!);
-    expect(confirmSpy).toHaveBeenCalledWith("Delete this session?");
+    expect(confirmSpy).toHaveBeenCalledWith('Delete session "Session One"?');
     await waitFor(() => expect(api.deleteSession).toHaveBeenCalledWith("abc123"));
   });
 
@@ -102,7 +102,7 @@ describe("SessionList", () => {
     const deleteBtn = findDeleteButton();
     expect(deleteBtn).toBeDefined();
     fireEvent.click(deleteBtn!);
-    expect(confirmSpy).toHaveBeenCalledWith("Delete this session?");
+    expect(confirmSpy).toHaveBeenCalledWith('Delete session "Session One"?');
     expect(api.deleteSession).not.toHaveBeenCalled();
   });
 });
